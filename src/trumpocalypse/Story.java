@@ -39,7 +39,7 @@ class Story {
                     progress++;
                     break;
                 case 4: 
-                    gc.getJFX().updateDialog("Suddenly an angry feminisht clinton supporter jumps out from the dark, and kills you for having your own opinion ");
+                    gc.getJFX().updateDialog("Suddenly an angry millenial clinton supporter jumps out from the dark, and kills you for having your own opinion ");
                     progress++;
                     break;  
                 default:
