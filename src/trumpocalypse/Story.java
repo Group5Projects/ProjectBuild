@@ -39,7 +39,7 @@ class Story {
                     progress++;
                     break;
                 case 4: 
-                    gc.getJFX().updateDialog("Searching house now. There is a man with a gun inside the house who shoots you. ");
+                    gc.getJFX().updateDialog("Suddenly an angry feminisht clinton supporter jumps out from the dark, and kills you for having your own opinion. ");
                     progress++;
                     break;  
                 default:
