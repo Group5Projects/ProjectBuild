@@ -32,8 +32,6 @@ public class Trumpocalypse extends Application {
     private Pane choicePane;
     private GameController gc;
     
-    private String randStr = "Random 123";
-    
     @Override
     public void start(Stage primaryStage) {
 
