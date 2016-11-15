@@ -21,12 +21,14 @@ class Story {
         
             switch (choice) {
                 case 1: 
-                    gc.getJFX().updateDialog("You have chosen to pick up the gun. It has been added to your inventory.");
+                    gc.getJFX().updateDialog("You begin walking West-bound on Interstate 10. After a few hours of walking, you see a stranger "
+                            + "sitting on the right-hand side of the road. He appears to be homeless, down on his luck, and not much of a threat "
+                            + "to you. Next to the stranger, you see a shopping cart filled with an array of different items.");
                     gc.getJFX().getChoicePane().getChildren();
-                    String choice1 = "Proceed walking";
-                    String choice2 = "Approach stranger on side of road";
-                    String choice3 = "Look for more items";
-                    String choice4 = "Display Inventory";
+                    String choice1 = "Keep walking";
+                    String choice2 = "Approach the Stranger";
+                    String choice3 = "Inspect Shopping Cart";
+                    String choice4 = "Check Inventory";
                     gc.getJFX().updateChoices(choice1, choice2, choice3, choice4);
                     progress++;
                     break;
