@@ -33,7 +33,15 @@ class Story {
                     progress++;
                     break;
                 case 2:
-                    gc.getJFX().updateDialog("You have chosen to keep walking. Good choice.");
+                    gc.getJFX().updateDialog("There are no useful items within the truck. You attempt to start the truck but it will not"
+                            + "turn over,"
+                            + "items to be found in the truck");
+                    gc.getJFX().getChoicePane().getChildren();
+                    String choice5 = "Try Starting the Truck Again";
+                    String choice6 = "Better Start Walking";
+                    String choice7 = "Check Wooden Crate";
+                    String choice8 = "Check Inventory";
+                    gc.getJFX().updateChoices(choice5, choice6, choice7, choice8);
                     progress++;
                     break;
                 case 3:
