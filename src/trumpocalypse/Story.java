@@ -27,7 +27,7 @@ class Story {
                     gc.getJFX().getChoicePane().getChildren();
                     String choice1 = "Keep walking";
                     String choice2 = "Approach the Stranger";
-                    String choice3 = "Inspect Shopping Cart";
+                    String choice3 = "Inspect the Shopping Cart";
                     String choice4 = "Check Inventory";
                     gc.getJFX().updateChoices(choice1, choice2, choice3, choice4);
                     progress++;
