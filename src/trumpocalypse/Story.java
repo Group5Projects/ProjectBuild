@@ -33,9 +33,7 @@ class Story {
                     progress++;
                     break;
                 case 2:
-                    gc.getJFX().updateDialog("There are no useful items within the truck. You attempt to start the truck but it will not"
-                            + "turn over,"
-                            + "items to be found in the truck");
+                    gc.getJFX().updateDialog("There are no useful items within the truck. You attempt to start the truck but it will not.");
                     gc.getJFX().getChoicePane().getChildren();
                     String choice5 = "Try Starting the Truck Again";
                     String choice6 = "Better Start Walking";
@@ -45,7 +43,13 @@ class Story {
                     progress++;
                     break;
                 case 3:
-                    gc.getJFX().updateDialog("Searching vehicle now. Some water was found inside the vehicle. It has been added to your inventory.");
+                    gc.getJFX().updateDialog("You search the crate and you find a handgun within the crate");
+                    gc.getJFX().getChoicePane().getChildren();
+                    String choice9 = "Add Handgun to Inventory";
+                    String choice10 = "Inspect Pickup Truck";
+                    String choice11 = "Start Walking";
+                    String choice12 = "Check Inventory";
+                    gc.getJFX().updateChoices(choice9, choice10, choice11, choice12);
                     progress++;
                     break;
                 case 4: 
