@@ -24,6 +24,6 @@ public class DialogText extends Text {
         this.setWrappingWidth(400);
         this.setTextAlignment(TextAlignment.CENTER);
         this.setLayoutX(50);
-        this.setLayoutY(100);
+        this.setLayoutY(140);
     }
 }
