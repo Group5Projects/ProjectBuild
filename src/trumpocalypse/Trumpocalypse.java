@@ -1,6 +1,7 @@
 package trumpocalypse;
 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -55,7 +56,7 @@ public class Trumpocalypse extends Application {
         startGame.setStyle("-fx-font: 18 arial; -fx-background-color: seagreen; -fx-text-fill: white; -fx-padding: 10 40 10 40;");
         startGame.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent t){
-                  stage.setScene(ingameScene());
+                  stage.setScene(inGameScene());
             }
         });
         startGame.setLayoutX(160);
@@ -85,12 +86,6 @@ public class Trumpocalypse extends Application {
                 + "The story takes place at the start of a nuclear war between Russia and the US. "
                 + "The player must make it to his bunker in time."
                 + "The player's success depends on his/her choices. Choose wisely!");
-        t.setFont(Font.font("Arial", FontWeight.NORMAL, 16)); 
-        t.setStyle("-fx-alignment: center-right; -fx-fill: white;");
-        t.setWrappingWidth(400);
-        t.setTextAlignment(TextAlignment.CENTER);
-        t.setLayoutX(50);
-        t.setLayoutY(140);
         
         // Exit Button
         ExitButton btnExit = new ExitButton();
@@ -99,6 +94,7 @@ public class Trumpocalypse extends Application {
         root.getChildren().addAll(iv1, t, createdBy, credits, startGame, btnExit);
         root.setStyle("-fx-background-image: url(textadventure-ingame.png);");
         
+        // Used to drag screen around
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -106,6 +102,7 @@ public class Trumpocalypse extends Application {
                 yOffset = event.getSceneY();
             }
         });
+        // Used to drag screen around
         root.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -116,7 +113,53 @@ public class Trumpocalypse extends Application {
         return new Scene(root);
     }
     
-    public Scene ingameScene(){
+    // Called if the user wins the game, dialog is used to display custom win message
+    public Scene endGameScene(String dialog) {
+        Pane root = new Pane();
+        root.getStylesheets().add("ingame.css");
+        
+        // Custom Dialog to show Winning Message
+        DialogText t = new DialogText(dialog);        
+        t.setLayoutY(120);
+        
+        // Restart and Exit Options
+        Pane finalPane = new Pane();
+        finalPane.setPrefSize(500, 180);
+        finalPane.setLayoutX(0);
+        finalPane.setLayoutY(260);
+        
+        // Restart and Exit Buttons (Using choice id of 5 & 6)
+        ChoiceButton btn1 = new ChoiceButton(gc, 5, "Restart Game");
+        ChoiceButton btn2 = new ChoiceButton(gc, 6, "Exit Game");
+        finalPane.getChildren().addAll(btn1,btn2);
+        
+        // Exit Button
+        ExitButton btnExit = new ExitButton();
+        
+        // Used to drag screen around
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        // Used to drag screen around
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+        
+        root.getChildren().addAll(t, finalPane, btnExit);
+        
+        root.setStyle("-fx-background-image: url(textadventure-ingame.png);");
+        return new Scene(root);
+    }
+    
+    public Scene inGameScene(){
         Pane root = new Pane();
         root.getStylesheets().add("ingame.css");
         
@@ -125,7 +168,7 @@ public class Trumpocalypse extends Application {
         
         // System Description
         HBox hb = new HBox();
-        dialog = new DialogText("Test");
+        dialog = new DialogText("[Insert opening dialog here]");
         hb.getChildren().add(dialog);
         hb.setPrefSize(500, 280);
         hb.setAlignment(Pos.CENTER_LEFT);
@@ -144,6 +187,7 @@ public class Trumpocalypse extends Application {
         RestartButton restartBtn = new RestartButton(stage);
         ExitButton exitBtn = new ExitButton();
         
+        // Used to drag screen around
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -151,6 +195,7 @@ public class Trumpocalypse extends Application {
                 yOffset = event.getSceneY();
             }
         });
+        // Used to drag screen around
         root.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -170,17 +215,26 @@ public class Trumpocalypse extends Application {
     }
     
     public void updateDialog(String text) {
+        // Updates the dialog story text 
         dialog.setText(text);
     }
     public void updateChoices(String c1, String c2, String c3, String c4) {
+        // Updates the ChoiceButtons with a new set of strings
         ChoiceButton choice1 = new ChoiceButton(gc, 1, c1);
         ChoiceButton choice2 = new ChoiceButton(gc, 2, c2);
         ChoiceButton choice3 = new ChoiceButton(gc, 3, c3);
         ChoiceButton choice4 = new ChoiceButton(gc, 4, c4);
         choicePane.getChildren().addAll(choice1, choice2, choice3, choice4);
     }
+    public void setEndScene(String dialog) {
+        // Called from story to show that the user has reached the end game (either failed or won)
+        stage.setScene(endGameScene(dialog));
+    }
     public Pane getChoicePane() {
-        return choicePane;
+        return this.choicePane;
+    }
+    public Stage getStage() {
+        return this.stage;
     }
     
 }
