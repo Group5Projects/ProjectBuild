@@ -11,7 +11,7 @@ public class GameController {
     private Trumpocalypse jfx;
     
     public GameController(Trumpocalypse jfx) {
-        mc.getCharacterInfo();
+        //mc.getCharacterInfo();
         
         this.jfx = jfx;
         story = new Story(this, jfx);
