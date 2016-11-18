@@ -21,6 +21,9 @@ class Story {
         
             switch (choice) {
                 case 1: 
+                    // Use gc.getJFX().setEndScene("Enter Dialog Text Here"); to end the game and declare the winner or loser
+                    // Uncomment line below to see how it works
+                    //gc.getJFX().setEndScene("Congratulations! You have won the game! Please select the restart or exit button below. Thanks for playing!");
                     gc.getJFX().updateDialog("You begin walking West-bound on Interstate 10. After a few hours of walking, you see a stranger "
                             + "sitting on the right-hand side of the road. He appears to be homeless, down on his luck, and not much of a threat "
                             + "to you. Next to the stranger, you see a shopping cart filled with an array of different items.");
