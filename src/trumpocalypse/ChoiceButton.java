@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  */
 
 public class ChoiceButton extends Button {
-    public ChoiceButton(GameController gc, int choice, String text) {
+    public ChoiceButton(GameController gc, String cID, int choice, String text) {
         // Used for choices in game (choice = (1-4))
         // If choices are 5 or 6, they are used to restart and exit game
         
@@ -47,7 +47,7 @@ public class ChoiceButton extends Button {
 
                 @Override
                 public void handle(ActionEvent event) {
-                    gc.getStory().updateStory(choice);
+                    gc.getStory().updateStory("", cID, choice);
                 }
 
             });
