@@ -6,7 +6,7 @@ package trumpocalypse;
  */
 
 public class GameController {
-    private Character mc = new Character("Julian", true);
+    
     private Story story;
     private Trumpocalypse jfx;
     
