@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Inventory {
     private ArrayList<Item> inv;
+    private int size;
     
     public Inventory() {
         inv = new ArrayList<Item>();
@@ -16,6 +17,7 @@ public class Inventory {
     
     public void addItem(Item i) {
         inv.add(i);
+        size++;
     }
     public void addItems(Item... is) {
         for (Item i: is) {
@@ -25,9 +27,14 @@ public class Inventory {
             }
             else {
                 inv.add(i);
+                size++;
             }
         }
     }
+    public int getSize() {
+        return this.size;
+    }
+    
     public void removeItem(Item i) {
         inv.remove(i);
     }
@@ -40,5 +47,23 @@ public class Inventory {
             System.out.println("Type: " + i.getType());
             System.out.println("Quantity: " + i.getQuantity() + "\n");
         }
+    }
+    
+    @Override
+    public String toString() {
+        String result = "";
+        
+        if (size > 0) {
+            for (Item i: this.inv) {
+                result += "\nName: " + i.getName() + "\n";
+                result += "Type: " + i.getType() + "\n";
+                result += "Quantity: " + i.getQuantity() + "\n";
+            }
+        }
+        else {
+            result += "No items in inventory!";
+        }
+        
+        return result;
     }
 }
