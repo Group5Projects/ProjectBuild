@@ -1,5 +1,11 @@
 package trumpocalypse;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 /**
  * 
  * @author Julian Loftis
@@ -8,114 +14,240 @@ package trumpocalypse;
 class Story {
     
     int progress;
+    int subprogress;
+    
     GameController gc;
     Trumpocalypse jfx;
+    String location;
+    private Character mc = new Character("Julian", true);
     
     public Story(GameController gc, Trumpocalypse jfx) {
-        progress = 0;
+        this.progress = 0;
+        this.subprogress = 0;
         this.gc = gc;
         this.jfx = jfx;
+        this.location = "start";
     }
     
-    public void updateStory(int choice) {
-        
-            switch (choice) {
-                case 1: 
-                    // Use gc.getJFX().setEndScene("Enter Dialog Text Here"); to end the game and declare the winner or loser
-                    // Uncomment line below to see how it works
-                    //gc.getJFX().setEndScene("Congratulations! You have won the game! Please select the restart or exit button below. Thanks for playing!");
-                    gc.getJFX().updateDialog("You begin walking West-bound on Interstate 10. After a few hours of walking, you see a stranger "
-                            + "sitting on the right-hand side of the road. He appears to be homeless, down on his luck, and not much of a threat "
-                            + "to you. Next to the stranger, you see a shopping cart filled with an array of different items.");
-                    gc.getJFX().getChoicePane().getChildren();
-                    String choice1 = "Keep walking";
-                    String choice2 = "Approach the Stranger";
-                    String choice3 = "Inspect the Shopping Cart";
-                    String choice4 = "Check Inventory";
-                    gc.getJFX().updateChoices(choice1, choice2, choice3, choice4);
-                    progress++;
-                        switch (choice) {
-                            case 1: 
-                                gc.getJFX().updateDialog("You continue walking along Interstate 10. After a few hours of walking, are are now outside the "
-                                        + "city limits of New Orleans, LA. As you enter the city, you are approached by a stranger carrying a backpack. You're "
-                                        + "not exactly sure what he wants.");
-                                gc.getJFX().getChoicePane().getChildren();
-                                String choice1a = "Try to Walk Past the Stranger";
-                                String choice2a = "Approach the Stranger";
-                                String choice3a = "Attack the Stranger";
-                                String choice4a = "Check Inventory";
-                                gc.getJFX().updateChoices(choice1a, choice2a, choice3a, choice4a);
-                                progress++;
-                                break;
-                            case 2:
-                                gc.getJFX().updateDialog("'Hello ther stranger. The name's Fred. What can I do for you?'");
-                                gc.getJFX().getChoicePane().getChildren();
-                                String choice5a = "'I'm trying to get to Arizona.'";
-                                String choice6a = "'What's with the outfit? Halloween's over.'";
-                                String choice7a = "'You've got a lot of stuff in that cart, I want it.'";
-                                String choice8a = "Check Inventory";
-                                gc.getJFX().updateChoices(choice5a, choice6a, choice7a, choice8a);
-                                progress++;
-                                break;
-                            case 3:
-                                gc.getJFX().updateDialog("You attempt to search the cart, but are abruptly stopped by the stranger. 'Whoa there fella! "
-                                        + "What are you doing going through my stuff?'");
-                                gc.getJFX().getChoicePane().getChildren();
-                                String choice9a = "'I'm sorry, I didn't know this was yours.'";
-                                String choice10a = "'Oh relax! This stuff is junk anyway.'";
-                                String choice11a = "'Stay out of my way, or be sorry!'";
-                                String choice12a = "Check Inventory";
-                                gc.getJFX().updateChoices(choice9a, choice10a, choice11a, choice12a);
-                                progress++;
-                                break;
-                            case 4: 
-                                gc.getJFX().updateDialog("Inventory");
-                                gc.getJFX().getChoicePane().getChildren();
-                                String choice13a = "Display Weapons";
-                                String choice14a = "Display Med-Kits";
-                                String choice15a = "Display Currency";
-                                String choice16a = "Go Back";
-                                gc.getJFX().updateChoices(choice13a, choice14a, choice15a, choice16a);
-                                break;  
-                            default:
-                                gc.getJFX().updateDialog("Error");
-                                break;
-                        }
-                    break;
-                    
-                case 2:
-                    gc.getJFX().updateDialog("There are no useful items within the truck. You attempt to start the truck but it will not.");
-                    gc.getJFX().getChoicePane().getChildren();
-                    String choice5 = "Try Starting the Truck Again";
-                    String choice6 = "Better Start Walking";
-                    String choice7 = "Check Wooden Crate";
-                    String choice8 = "Check Inventory";
-                    gc.getJFX().updateChoices(choice5, choice6, choice7, choice8);
-                    progress++;
-                    break;
-                case 3:
-                    gc.getJFX().updateDialog("You search the crate and you find a handgun within the crate");
-                    gc.getJFX().getChoicePane().getChildren();
-                    String choice9 = "Add Handgun to Inventory";
-                    String choice10 = "Inspect Pickup Truck";
-                    String choice11 = "Start Walking";
-                    String choice12 = "Check Inventory";
-                    gc.getJFX().updateChoices(choice9, choice10, choice11, choice12);
-                    progress++;
-                    break;
-                case 4: 
-                    gc.getJFX().updateDialog("Inventory");
-                    gc.getJFX().getChoicePane().getChildren();
-                    String choice13 = "Display Weapons";
-                    String choice14 = "Display Med-Kits";
-                    String choice15 = "Display Currency";
-                    String choice16 = "Go Back";
-                    gc.getJFX().updateChoices(choice13, choice14, choice15, choice16);
-                    break;  
-                default:
-                    gc.getJFX().updateDialog("Error");
-                    break;
+    
+    public void searchVehicle() {
+        gc.getJFX().updateDialog(location);
+    }
+    
+    /*
+    
+    CHAPTER ONE METHODS
+     - approachStranger
+     - inspectShoppingCart
+
+    */
+    
+    public void approachStranger(String location) {
+        if (subprogress == 0) {
+            gc.getJFX().updateDialog("Hey, hows it going? (Stranger) Not too well, can't seem to find any water anywhere. You wouldn't have any would you?");
+            gc.getJFX().getChoicePane().getChildren();
+
+            String choice1 = "Give stranger water";
+            String choice2 = "Tell stranger you don't have any";
+            String choice3 = "Turn around and walk away";
+            String choice4 = "Check Inventory";
+
+            gc.getJFX().updateChoices("approach givewater", choice1, "approach nowater", choice2, "approach turnaround", choice3, "check", choice4);
+            subprogress++;
+        }
+        else {
+
+            if (location.contains("givewater")) {
+                //Givewater
+                String prepend = "Thank you for the water! I really needed this. Here is some money in return. Good luck with your trip.";
+                progress++;
+                subprogress = 0;
+                
+                updateStory(prepend, location, 1);
             }
+            else if (location.contains("nowater")) {
+                // Nowater
+                String prepend = "Hmmm... Okay. Have a good day then.";
+                progress++;
+                subprogress = 0;
+                
+                updateStory(prepend, location, 2);
+            }
+            else if (location.contains("turnaround")) {
+                // Turnaround
+                if (subprogress == 1) {
+                    gc.getJFX().updateDialog("Hey! I was talking to you. Get back over here.");
+
+                    String choice1 = "Turn around and go back to stranger";
+                    String choice2 = "Pull pistol out to confront stranger";
+                    String choice3 = "Run Away";
+                    String choice4 = "Check Inventory";
+                    
+                    gc.getJFX().updateChoices("approach turnaround goback", choice1, "approach turnaround pistol", choice2, "approach turnaround runaway", choice3, "check", choice4);
+                    subprogress++;
+                }
+                else {
+                    if (location.contains("goback")) {
+                        String prepend = "Stranger pulls out pistol and shoots at you. The bullet hits your arm. Health has been reduced by 25%. You return fire and the stranger runs off.";                        
+                        progress++;
+                        subprogress = 0;
+                        updateStory(prepend, location, 1);
+                    }
+                    else if (location.contains("pistol")) {
+                        String prepend = "'Hold up man, I don't want any trouble. I'm out of here.' (Stranger runs off).";
+                        progress++;
+                        subprogress = 0;
+                        updateStory(prepend, location, 2);
+                    }
+                    else if (location.contains("runaway")) {
+                        String prepend = "The stranger begins to shoot in your direction but misses. You found a hiding place and lost him.";
+                        progress++;
+                        subprogress = 0;
+                        updateStory(prepend, location, 3);
+                    }
+                    else {
+                        // Check Inventory
+                        displayInventory();
+                    }
+                }
+            }
+            else {
+                // Inventory
+                displayInventory();
+            }
+        }
+    }
+    public void inspectShoppingCart(String location) {
+        if (subprogress == 0) {
+            String prepend = "You walk up and begin to search the shopping cart. Inside you find a bottle of water, some crackers, and duct tape. These items have been added to your inventory.\n ";
+            progress++;
+            subprogress = 0;
+            
+            Item water = new Item("Bottle of Water", "Food/Water", 1);
+            Item crackers = new Item("Crackers", "Food/Water", 1);
+            Item ductTape = new Item("Duct Tape", "Tools", 1);
+            
+            mc.getInventory().addItems(water,crackers,ductTape);
+            
+            updateStory(prepend, "inspect", 3);
+        }
+    }
+    
+    /*
+    
+    END CHAPTER ONE METHODS
+    
+    */
+    
+    /* 
+    
+    CHAPTER 2 METHODS
+    - interveneArguing
+    - walkCalmly
+    
+    */
+    
+    public void interveneArguing(String location) {
+        if (subprogress == 0) {
+            
+            gc.getJFX().updateDialog("One man pulls out a gun and is threatening to shoot the other.");
+            
+            String choice1 = "Pull out pistol";
+            String choice2 = "Pull out pistol and shoot";
+            String choice3 = "See if you can de-escalate the situation";
+            String choice4 = "Check Inventory";
+            
+            gc.getJFX().updateChoices("pistol1", choice1, "pistol2", choice2, "deescalateSituation", choice3, "check", choice4);
+            subprogress++;
+        }
+        else {
+            
+            if (location.contains("pistol1")) {
+                
+            }
+            else if (location.contains("pistol2")) {
+                
+            }
+            else if (location.contains("deescalateSituation")) {
+                
+            }
+            else {
+                displayInventory();
+            }
+        }
+    }
+   
+    
+    public void displayInventory() {
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.UTILITY);
+        Scene scene = new Scene(new Group(new Text(25, 25, mc.getInventory().toString())));
+        dialog.setScene(scene);
+        dialog.setWidth(250);
+        dialog.setHeight(250);
+        dialog.show();
+    }
+    
+    public void updateStory(String prepend, String location, int choice) {
+        
+        if (progress == 0) {
+            
+            System.out.println("Progress: " + progress);
+            System.out.println("Subprogress: " + subprogress);
+            System.out.println("Location: " + location);
+            
+            if (location.contains("keepwalking")) {
+                // Proceed
+                progress++;
+                updateStory("", "keepwalking", 1);
+            }
+                
+            if (location.contains("approach")) {
+                approachStranger(location);
+            }
+            
+            if (location.contains("inspect")) {
+                inspectShoppingCart(location);
+            }
+            
+            if (location.contains("check")) {
+                System.out.println("here");
+                displayInventory();
+            }
+            
+        }
+        else if (progress == 1) {
+           
+                gc.getJFX().updateDialog(prepend + "You come across two people arguing in the road. One is accusing the other of stealing something from the other.");
+
+                String choice1 = "Intervene";
+                String choice2 = "Walk calmly up to them";
+                String choice3 = "Ignore and keep walking";
+                String choice4 = "Check Inventory";
+
+                gc.getJFX().updateChoices("intervene", choice1, "walkCalmly", choice2, "ignore", choice3, "check", choice4);
+                progress++;
+                
+        }
+        else if (progress == 2) {
+
+            if (location.contains("intervene")) {
+                //interveneArguing(location);
+            }
+            else if (location.contains("walkCalmly")) {
+                //walkCalmly(location);
+            }
+            else if (location.contains("ignore")) {
+                //ignoreArguing(location);
+            }
+            else if (location.contains("check")) {
+               // Check Inventory
+               displayInventory();
+            }
+            
+        }
+        
+
     }
         
       
