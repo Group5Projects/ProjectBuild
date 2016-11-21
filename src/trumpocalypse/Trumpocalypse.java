@@ -129,8 +129,8 @@ public class Trumpocalypse extends Application {
         finalPane.setLayoutY(260);
         
         // Restart and Exit Buttons (Using choice id of 5 & 6)
-        ChoiceButton btn1 = new ChoiceButton(gc, 5, "Restart Game");
-        ChoiceButton btn2 = new ChoiceButton(gc, 6, "Exit Game");
+        ChoiceButton btn1 = new ChoiceButton(gc, "restart", 5, "Restart Game");
+        ChoiceButton btn2 = new ChoiceButton(gc, "exit", 6, "Exit Game");
         finalPane.getChildren().addAll(btn1,btn2);
         
         // Exit Button
@@ -168,7 +168,7 @@ public class Trumpocalypse extends Application {
         
         // System Description
         HBox hb = new HBox();
-        dialog = new DialogText("[Insert opening dialog here]");
+        dialog = new DialogText("You have to come an intersection. You see a stranger sitting on the side of the road");
         hb.getChildren().add(dialog);
         hb.setPrefSize(500, 280);
         hb.setAlignment(Pos.CENTER_LEFT);
@@ -178,10 +178,10 @@ public class Trumpocalypse extends Application {
         choicePane.setPrefSize(500, 180);
         choicePane.setLayoutX(0);
         choicePane.setLayoutY(220);
-        ChoiceButton btn1 = new ChoiceButton(gc, 1, "Pick up gun");
-        ChoiceButton btn2 = new ChoiceButton(gc, 2, "Keep walking");
-        ChoiceButton btn3 = new ChoiceButton(gc, 3, "Search Vehicle");
-        ChoiceButton btn4 = new ChoiceButton(gc, 4, "Search House");
+        ChoiceButton btn1 = new ChoiceButton(gc, "keepwalking", 1, "Keep walking");
+        ChoiceButton btn2 = new ChoiceButton(gc, "approach", 2, "Approach the Stranger");
+        ChoiceButton btn3 = new ChoiceButton(gc, "inspect", 3, "Inspect the Shopping Cart");
+        ChoiceButton btn4 = new ChoiceButton(gc, "check", 4, "Check Inventory");
         choicePane.getChildren().addAll(btn1,btn2,btn3,btn4);
         
         RestartButton restartBtn = new RestartButton(stage);
@@ -218,12 +218,12 @@ public class Trumpocalypse extends Application {
         // Updates the dialog story text 
         dialog.setText(text);
     }
-    public void updateChoices(String c1, String c2, String c3, String c4) {
+    public void updateChoices(String c1ID, String c1, String c2ID, String c2, String c3ID, String c3, String c4ID, String c4) {
         // Updates the ChoiceButtons with a new set of strings
-        ChoiceButton choice1 = new ChoiceButton(gc, 1, c1);
-        ChoiceButton choice2 = new ChoiceButton(gc, 2, c2);
-        ChoiceButton choice3 = new ChoiceButton(gc, 3, c3);
-        ChoiceButton choice4 = new ChoiceButton(gc, 4, c4);
+        ChoiceButton choice1 = new ChoiceButton(gc, c1ID, 1, c1);
+        ChoiceButton choice2 = new ChoiceButton(gc, c2ID, 2, c2);
+        ChoiceButton choice3 = new ChoiceButton(gc, c3ID, 3, c3);
+        ChoiceButton choice4 = new ChoiceButton(gc, c4ID, 4, c4);
         choicePane.getChildren().addAll(choice1, choice2, choice3, choice4);
     }
     public void setEndScene(String dialog) {
