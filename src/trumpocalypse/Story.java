@@ -15,6 +15,7 @@ class Story {
     
     int progress;
     int subprogress;
+    int subsubprogress;
     
     GameController gc;
     Trumpocalypse jfx;
@@ -25,6 +26,7 @@ class Story {
     public Story(GameController gc, Trumpocalypse jfx) {
         this.progress = 0;
         this.subprogress = 0;
+        this.subsubprogress = 0;
         this.gc = gc;
         this.jfx = jfx;
         this.location = "start";
@@ -78,7 +80,7 @@ class Story {
                 // Turnaround
                 if (subprogress == 1) {
                     gc.getJFX().updateDialog("Hey! I was talking to you. Get back over here.");
-
+                    
                     String choice1 = "Turn around and go back to stranger";
                     String choice2 = "Pull pistol out to confront stranger";
                     String choice3 = "Run Away";
@@ -89,10 +91,56 @@ class Story {
                 }
                 else {
                     if (location.contains("goback")) {
-                        String prepend = "Stranger pulls out pistol and shoots at you. The bullet hits your arm. Health has been reduced by 25%. You return fire and the stranger runs off.";                        
-                        progress++;
-                        subprogress = 0;
-                        updateStory(prepend, location, 1);
+                        //String prepend = "Stranger pulls out pistol and shoots at you. The bullet hits your arm. Health has been reduced by 25%. You return fire and the stranger runs off.";                        
+                        if (subsubprogress == 0) {
+                          
+                            gc.getJFX().updateDialog("Stranger pulls out pistol and shoots at you. THe bullet hits your arm. Health has been reduced by 25%.");
+
+                            String choice1 = "Heal using medkit";
+                            String choice2 = "Return pistol fire";
+                            String choice3 = "Run away";
+                            String choice4 = "Check Inventory";
+                            
+                            gc.getJFX().updateChoices("approach turnaround goback heal", choice1, "approach turnaround goback pistol", choice2, "approach turnaround goback runaway", choice3, "approach turnaround goback check", choice4);
+                            subsubprogress++;
+                        }
+                        else {
+                            if (location.contains("heal")) {
+                                String prepend = "You healed using the medkit and the stranger appeared to run away.";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                updateStory(prepend, location, 1);
+                            }
+                            else if (location.contains("pistol")) {
+                                String prepend = "You use your pistol and shoot back.";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                updateStory(prepend, location, 2);
+                            }
+                            else if (location.contains("runaway")) {
+                                String prepend = "You runaway and lose him.";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                updateStory(prepend, location, 3);
+                            }
+                            else if (location.contains("check")) {
+                                String prepend = "Display Inventory";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                updateStory(prepend, location, 4);
+                            }
+                        }
+                        //progress++;
+                        //subprogress = 0;
+                        //updateStory(prepend, location, 1);
                     }
                     else if (location.contains("pistol")) {
                         String prepend = "'Hold up man, I don't want any trouble. I'm out of here.' (Stranger runs off).";
@@ -127,7 +175,7 @@ class Story {
             Item water = new Item("Bottle of Water", "Food/Water", 1);
             Item crackers = new Item("Crackers", "Food/Water", 1);
             Item ductTape = new Item("Duct Tape", "Tools", 1);
-            
+                       
             mc.getInventory().addItems(water,crackers,ductTape);
             
             updateStory(prepend, "inspect", 3);
@@ -148,37 +196,6 @@ class Story {
     
     */
     
-    public void interveneArguing(String location) {
-        if (subprogress == 0) {
-            
-            gc.getJFX().updateDialog("One man pulls out a gun and is threatening to shoot the other.");
-            
-            String choice1 = "Pull out pistol";
-            String choice2 = "Pull out pistol and shoot";
-            String choice3 = "See if you can de-escalate the situation";
-            String choice4 = "Check Inventory";
-            
-            gc.getJFX().updateChoices("pistol1", choice1, "pistol2", choice2, "deescalateSituation", choice3, "check", choice4);
-            subprogress++;
-        }
-        else {
-            
-            if (location.contains("pistol1")) {
-              
-            }
-            else if (location.contains("pistol2")) {
-                
-            }
-            else if (location.contains("deescalateSituation")) {
-                
-            }
-            else {
-                displayInventory();
-            }
-        }
-    }
-   
-    
     public void displayInventory() {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
@@ -187,6 +204,131 @@ class Story {
         dialog.setWidth(250);
         dialog.setHeight(250);
         dialog.show();
+    }
+    
+    public void intervene(String location) {
+        
+        if (subprogress == 0) {
+            gc.getJFX().updateDialog("Mind your own business!");
+            
+            String choice1 = "You both need to stop!";
+            String choice2 = "Awe, cant we all just get along?";
+            String choice3 = "Were you dropped as a baby?";
+            String choice4 = "Indicate you supported Trump.";
+            gc.getJFX().updateChoices("intervene stop", choice1, "intervene along", choice2, "intervene baby", choice3, "intervene trump", choice4);
+            
+            subprogress++;
+        }
+        else {
+            if (location.contains("stop")) {
+                if (subprogress == 1) {
+                    gc.getJFX().updateDialog("lol? seriously? weak? This wont stop, I'm killing this thief!");
+
+                    String choice1 = "Grab the man?";
+                    String choice2 = "Yell: Hey! aint nobody got time for this!";
+                    String choice3 = "...Is there a fire?";
+                    String choice4 = "If someone throws bread at you....do you duck?";
+                    
+                    System.out.println("Progress: " + progress);
+                    System.out.println("Subprogress: " + subprogress);
+                    System.out.println("Location: " + location);
+                    
+                    subprogress++;
+                    gc.getJFX().updateChoices("intervene stop grab", choice1, "intervene stop yell", choice2, "intervene stop fire", choice3, "intervene stop duck", choice4);
+                }
+                else {
+                    System.out.println("Progress: " + progress);
+                    System.out.println("Subprogress: " + subprogress);
+                    System.out.println("Subsubprogress: " + subsubprogress);
+                    System.out.println("Location: " + location);
+                    
+                    if (location.contains("grab")) {
+                        
+                        String prepend = "You grabbed the man. He pulls out a knife and stabs you. You run away from the scene.";
+                        progress++;
+                        subprogress = 0;
+                        
+                        updateStory(prepend, location, 1);
+                    }
+                    else if (location.contains("yell")) {
+                        System.out.println("Yes it does");
+                        if (subsubprogress == 0) {
+                            gc.getJFX().updateDialog("The angry man grabs your throat and begins choking you... Mr.funny, I presume?");
+                            
+                            String choice1 = "Please stop?";
+                            String choice2 = "Gouge his eyes out!";
+                            String choice3 = "Knee to the groin!";
+                            String choice4 = "Snot strike!";
+                            
+                            gc.getJFX().updateChoices("intervene stop yell stop", choice1, "intervene stop yell gouge", choice2, "intervene stop yell knee", choice3, "intervene stop yell snot", choice4);
+                            subsubprogress++;
+                        }
+                        else {
+                            if (location.contains("stop")) {
+                                String prepend = "You plead for the man to stop, you hear faint chuckling as your vision goes dark, and your journey ends.";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                
+                                updateStory(prepend, location, 1);
+                            }
+                            else if (location.contains("gouge")) {
+                                String prepend = "You claw at his eyes, like a fat fingered infant grabbing playdough. The man goes down like a hobo on a ham sandwich. So much blood!";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                
+                                updateStory(prepend, location, 2);
+                            }
+                            else if (location.contains("knee")) {
+                                String prepend = "You knee him in the groin!";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                
+                                updateStory(prepend, location, 3);
+                            }
+                            else if (location.contains("snot")) {
+                                String prepend = "The sinus infection you have, has paid off. You spew forth a small meteric crap ton of green sludge from your sinus canals; smothering the mans face yellowish green mucus. The man gags and lets go of you, you can hear him vomiting as you flee.";
+                                
+                                progress++;
+                                subprogress = 0;
+                                subsubprogress = 0;
+                                
+                                updateStory(prepend, location, 4);
+                            }
+                        }
+                        
+                    }
+                    else if (location.contains("fire")) {
+                        String prepend = "You see a fire and run away. ";
+                        progress++;
+                        subprogress = 0;
+                        
+                        updateStory(prepend, location, 1);
+                    }
+                    else if (location.contains("duck")) {
+                        String prepend = "You grabbed the man. He pulls out a knife and stabs you. You run away from the scene.";
+                        progress++;
+                        subprogress = 0;
+                        
+                        updateStory(prepend, location, 1);
+                    }
+                }
+            }
+            else if (location.contains("along")) {
+                
+            }
+            else if (location.contains("baby")) {
+                
+            }
+            else if (location.contains("trump")) {
+                
+            }
+        }
     }
     
     public void updateStory(String prepend, String location, int choice) {
@@ -233,15 +375,7 @@ class Story {
         else if (progress == 2) {
 
             if (location.contains("intervene")) {
-                //interveneArguing(location);
-                gc.getJFX().updateDialog("Mind your own buisness!");
-                String choice1 = "You both need to stop!";
-                String choice2 = "Awe, cant we all just get along?";
-                String choice3 = "Were you dropped as a baby?";
-                String choice4 = "Indicate you supported Trump.";
-                gc.getJFX().updateChoices("stop", choice1, "along", choice2, "baby", choice3, "trump", choice4);
-                progress++;
-                
+                intervene(location);
             }
             else if (location.contains("along")) {
                  //along
@@ -252,63 +386,36 @@ class Story {
             else if (location.contains("trump")) {
                gc.getJFX().updateDialog("Hey, I voted for Trump buddy!");
                
-               ;
             }
             
         }
         else if (progress == 3){
-    
-    if (location.contains("stop")) {
-               //Murphy Story Line Update. 
-                gc.getJFX().updateDialog("lol? seriously? weak? This wont stop, I'm killing this thief!");
-                String choice1 = "Grab the man?";
-                String choice2 = "Yell: Hey! aint nobody got time for this!";
-                String choice3 = "...Is there a fire?";
-                String choice4 = "If someone throws bread at you....do you duck?";
-            gc.getJFX().updateChoices("Grab", choice1, "Yell", choice2, "Fire", choice3, "Duck", choice4);
-                progress++;
-            }
-    else if (location.contains("Grab")){
-    gc.getJFX().updateDialog("You grab the man, and he throat punches you, rendering you unconscious.");
+            
+            System.out.println("Progress #3");
+            gc.getJFX().updateDialog(prepend + "You come across a bridge.");
+            
+            String choice1 = "Choice 1";
+            String choice2 = "Choice 2";
+            String choice3 = "Choice 3";
+            String choice4 = "Choice 4";
+            
+            gc.getJFX().updateChoices("choice1", choice1, "choice2", choice2, "choice3", choice3, "choice4", choice4);
+            
+//            if (location.contains("stop")) {
+//                       //Murphy Story Line Update. 
+//                        
+//                        
+//                        progress++;
+//            }
+//            else if (location.contains("")) {
+//
+//            }
+//            else if (location.contains("Grab")){
+//                gc.getJFX().updateDialog("You grab the man, and he throat punches you, rendering you unconscious.");
+//            }
+            
         }
-        
-    
-}
-         else if (progress == 4){
-    
-    if (location.contains("Yell")) {
-               
-                gc.getJFX().updateDialog("The angry man grabs your throat and begins choking you... Mr.funny, I presume?");
-                String choice1 = "Please stop?";
-                String choice2 = "Gouge his eyes out!";
-                String choice3 = "Knee to the groin!";
-                String choice4 = "Snot strike!";
-            gc.getJFX().updateChoices("Please", choice1, "Gouge", choice2, "Knee", choice3, "Boogers", choice4);
-                progress = 4;
-            }
-    else if(location.contains("Boogers")){
-        gc.getJFX().updateDialog("The sinus infection you have, has paid off. You spew forth a small meteric crap ton of green sludge from your sinus canals; smothering the mans face yellowish green mucus. The man gags and lets go of you, you can hear him vomiting as you flee.");
-        progress = 4;
-    }
-    
-    else if (location.contains("Gouge")){
-        gc.getJFX().updateDialog("You claw at his eyes, like a fat fingered infant grabbing playdough. The man goes down like a hobo on a ham sandwich. So much blood!");
-    
-    }
-    else if (location.contains("Knee")){
-        gc.getJFX().updateDialog("You knee him in the groin!");
-    }
-    else if (location.contains("Please")){
-        gc.getJFX().updateDialog("You plead for the man to stop, you hear faint chuckling as your vision goes dark, and your journey ends.");
-        progress = 0;
-    }
-    
-    
-    
-    
-    
-}
-       
+   
     }
         
         
