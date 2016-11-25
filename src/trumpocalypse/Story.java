@@ -19,6 +19,7 @@ class Story {
     GameController gc;
     Trumpocalypse jfx;
     String location;
+    
     private Character mc = new Character("Julian", true);
     
     public Story(GameController gc, Trumpocalypse jfx) {
@@ -163,7 +164,7 @@ class Story {
         else {
             
             if (location.contains("pistol1")) {
-                
+              
             }
             else if (location.contains("pistol2")) {
                 
@@ -220,7 +221,7 @@ class Story {
            
                 gc.getJFX().updateDialog(prepend + "You come across two people arguing in the road. One is accusing the other of stealing something from the other.");
 
-                String choice1 = "Intervene";
+                String choice1 = "intervene";
                 String choice2 = "Walk calmly up to them";
                 String choice3 = "Ignore and keep walking";
                 String choice4 = "Check Inventory";
@@ -233,22 +234,87 @@ class Story {
 
             if (location.contains("intervene")) {
                 //interveneArguing(location);
+                gc.getJFX().updateDialog("Mind your own buisness!");
+                String choice1 = "You both need to stop!";
+                String choice2 = "Awe, cant we all just get along?";
+                String choice3 = "Were you dropped as a baby?";
+                String choice4 = "Indicate you supported Trump.";
+                gc.getJFX().updateChoices("stop", choice1, "along", choice2, "baby", choice3, "trump", choice4);
+                progress++;
+                
             }
-            else if (location.contains("walkCalmly")) {
-                //walkCalmly(location);
+            else if (location.contains("along")) {
+                 //along
             }
-            else if (location.contains("ignore")) {
+            else if (location.contains("baby")) {
                 //ignoreArguing(location);
             }
-            else if (location.contains("check")) {
-               // Check Inventory
-               displayInventory();
+            else if (location.contains("trump")) {
+               gc.getJFX().updateDialog("Hey, I voted for Trump buddy!");
+               
+               ;
             }
             
         }
+        else if (progress == 3){
+    
+    if (location.contains("stop")) {
+               //Murphy Story Line Update. 
+                gc.getJFX().updateDialog("lol? seriously? weak? This wont stop, I'm killing this thief!");
+                String choice1 = "Grab the man?";
+                String choice2 = "Yell: Hey! aint nobody got time for this!";
+                String choice3 = "...Is there a fire?";
+                String choice4 = "If someone throws bread at you....do you duck?";
+            gc.getJFX().updateChoices("Grab", choice1, "Yell", choice2, "Fire", choice3, "Duck", choice4);
+                progress++;
+            }
+    else if (location.contains("Grab")){
+    gc.getJFX().updateDialog("You grab the man, and he throat punches you, rendering you unconscious.");
+        }
         
-
+    
+}
+         else if (progress == 4){
+    
+    if (location.contains("Yell")) {
+               
+                gc.getJFX().updateDialog("The angry man grabs your throat and begins choking you... Mr.funny, I presume?");
+                String choice1 = "Please stop?";
+                String choice2 = "Gouge his eyes out!";
+                String choice3 = "Knee to the groin!";
+                String choice4 = "Snot strike!";
+            gc.getJFX().updateChoices("Please", choice1, "Gouge", choice2, "Knee", choice3, "Boogers", choice4);
+                progress = 4;
+            }
+    else if(location.contains("Boogers")){
+        gc.getJFX().updateDialog("The sinus infection you have, has paid off. You spew forth a small meteric crap ton of green sludge from your sinus canals; smothering the mans face yellowish green mucus. The man gags and lets go of you, you can hear him vomiting as you flee.");
+        progress = 4;
+    }
+    
+    else if (location.contains("Gouge")){
+        gc.getJFX().updateDialog("You claw at his eyes, like a fat fingered infant grabbing playdough. The man goes down like a hobo on a ham sandwich. So much blood!");
+    
+    }
+    else if (location.contains("Knee")){
+        gc.getJFX().updateDialog("You knee him in the groin!");
+    }
+    else if (location.contains("Please")){
+        gc.getJFX().updateDialog("You plead for the man to stop, you hear faint chuckling as your vision goes dark, and your journey ends.");
+        progress = 0;
+    }
+    
+    
+    
+    
+    
+}
+       
     }
         
+        
+    }
+    
+    
+
       
-}
+
