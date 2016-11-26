@@ -244,7 +244,7 @@ class Story {
                     
                     if (location.contains("grab")) {
                         
-                        String prepend = "You grabbed the man. He pulls out a knife and stabs you. You run away from the scene.";
+                        String prepend = "Not the best decision, he quickly turns and knocks you unconcious.";
                         progress++;
                         subprogress = 0;
                         
@@ -311,7 +311,7 @@ class Story {
                         updateStory(prepend, location, 1);
                     }
                     else if (location.contains("duck")) {
-                        String prepend = "You grabbed the man. He pulls out a knife and stabs you. You run away from the scene.";
+                        String prepend = "Yes, a profound statement, random, and unrelevant.... You win nothing.";
                         progress++;
                         subprogress = 0;
                         
@@ -320,7 +320,10 @@ class Story {
                 }
             }
             else if (location.contains("along")) {
-                
+                String preprend ="Get along? lol, sure.... You can get along with my boot in your ass.";
+                progress++;
+                subprogress = 0;
+                updateStory(preprend,location,1);
             }
             else if (location.contains("baby")) {
                 String preprend ="Dropped, eh? I'm gonna drop you! A ringing fills you ears, you feel wet...and cold.";
@@ -329,10 +332,10 @@ class Story {
                  updateStory(preprend,location,1);
             }
             else if (location.contains("trump")) {
-                String preprend ="I voted clinton! :You then argue empty, vague, viewpoints for the rest of eternity uterly failing this game... and at life.";
+                String preprend ="I voted clinton!" +" :You then argue empty, vague, viewpoints for the rest of eternity uterly failing this game... and at life.";
                 progress++;
                 subprogress = 0;
-                 updateStory(preprend,location,1);
+                 updateStory(preprend,location ,1);
             }
         }
     }
@@ -353,7 +356,13 @@ class Story {
                 
             if (location.contains("approach")) {
                 approachStranger(location);
+                String preprend ="Im looking for my family, I was wondering if you would look at this photo... I belive they would have travled this way."+
+                        "The stranger states he saw them traveling east..you continue to walk onward ";
+                progress++;
+                subprogress = 0;
+                 updateStory(preprend,location,1);
             }
+            
             
             if (location.contains("inspect")) {
                 inspectShoppingCart(location);
@@ -398,7 +407,7 @@ class Story {
         else if (progress == 3){
             
             System.out.println("Progress #3");
-            gc.getJFX().updateDialog(prepend + "You come across a bridge.");
+            gc.getJFX().updateDialog(prepend + "As you regain conciousness, you see a small locket; in the shape of a heart laying on the ground nearby.");
             
             String choice1 = "Choice 1";
             String choice2 = "Choice 2";
