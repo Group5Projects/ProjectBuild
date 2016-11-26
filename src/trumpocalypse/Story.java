@@ -323,10 +323,16 @@ class Story {
                 
             }
             else if (location.contains("baby")) {
-                
+                String preprend ="Dropped, eh? I'm gonna drop you! A ringing fills you ears, you feel wet...and cold.";
+                progress++;
+                subprogress = 0;
+                 updateStory(preprend,location,1);
             }
             else if (location.contains("trump")) {
-                
+                String preprend ="I voted clinton! :You then argue empty, vague, viewpoints for the rest of eternity uterly failing this game... and at life.";
+                progress++;
+                subprogress = 0;
+                 updateStory(preprend,location,1);
             }
         }
     }
@@ -399,7 +405,7 @@ class Story {
             String choice3 = "Choice 3";
             String choice4 = "Choice 4";
             
-            gc.getJFX().updateChoices("choice1", choice1, "choice2", choice2, "choice3", choice3, "choice4", choice4);
+            gc.getJFX().updateChoices("potatoe", choice1, "chicken", choice2, "fish", choice3, "mustard4", choice4);
             
 //            if (location.contains("stop")) {
 //                       //Murphy Story Line Update. 
