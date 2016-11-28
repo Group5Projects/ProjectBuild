@@ -15,7 +15,7 @@ public class Character {
     
     public Character(String n, boolean b) {
         this.name = n;
-        this.health = 100.00;
+        this.health = 25.00;
         this.isMain = b;
     }
     
@@ -34,6 +34,20 @@ public class Character {
             this.health += h;
         }
     }
+    
+    public void reduceHealth(double h) {
+        this.health -= h;
+    }
+    
+    public void clearInventory() {
+        this.inv = null;
+        this.inv = new Inventory();
+    }
+    
+    public void clearCurrency() {
+        this.currency = 0.00;
+    }
+    
     public double getHealth() {
         return this.health;
     }
