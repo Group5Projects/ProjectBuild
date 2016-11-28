@@ -47,7 +47,7 @@ public class ChoiceButton extends Button {
 
                 @Override
                 public void handle(ActionEvent event) {
-                    gc.getStory().updateStory("", cID, choice);
+                    gc.getStory().updateStory("", cID);
                 }
 
             });
