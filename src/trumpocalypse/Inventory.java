@@ -35,8 +35,10 @@ public class Inventory {
         return this.size;
     }
     
-    public void removeItem(Item i) {
+    public Item removeItem(Item i) {
+        Item n = i;
         inv.remove(i);
+        return n;
     }
     public ArrayList<Item> getInventory() {
         return this.inv;
