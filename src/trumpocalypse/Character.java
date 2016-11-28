@@ -15,7 +15,7 @@ public class Character {
     
     public Character(String n, boolean b) {
         this.name = n;
-        this.health = 25.00;
+        this.health = 100.00;
         this.isMain = b;
     }
     
