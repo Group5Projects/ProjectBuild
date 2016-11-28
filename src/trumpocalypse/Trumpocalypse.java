@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -168,7 +167,9 @@ public class Trumpocalypse extends Application {
         
         // System Description
         HBox hb = new HBox();
-        dialog = new DialogText("You have to come an intersection. You see a stranger sitting on the side of the road");
+        dialog = new DialogText("You are trying to make it to your bunker which is five miles away." +
+                "You are proceeding on foot. You have your backpack with you which contains $50, water," +
+                "and a knife. You come across a man with a pistol mugging a lady.");
         hb.getChildren().add(dialog);
         hb.setPrefSize(500, 280);
         hb.setAlignment(Pos.CENTER_LEFT);
@@ -178,10 +179,12 @@ public class Trumpocalypse extends Application {
         choicePane.setPrefSize(500, 180);
         choicePane.setLayoutX(0);
         choicePane.setLayoutY(220);
-        ChoiceButton btn1 = new ChoiceButton(gc, "keepwalking", 1, "Keep walking");
-        ChoiceButton btn2 = new ChoiceButton(gc, "approach", 2, "Approach the Stranger");
-        ChoiceButton btn3 = new ChoiceButton(gc, "inspect", 3, "Inspect the Shopping Cart");
-        ChoiceButton btn4 = new ChoiceButton(gc, "check", 4, "Check Inventory");
+        
+        ChoiceButton btn1 = new ChoiceButton(gc, "c1Sneak", 1, "Silently sneak up and knife the guy");
+        ChoiceButton btn2 = new ChoiceButton(gc, "c1Resolve", 2, "Try to resolve situation peacefully");
+        ChoiceButton btn3 = new ChoiceButton(gc, "c1Stop", 3, "Yell at the man to stop");
+        ChoiceButton btn4 = new ChoiceButton(gc, "c1Check", 4, "Check Inventory");
+        
         choicePane.getChildren().addAll(btn1,btn2,btn3,btn4);
         
         RestartButton restartBtn = new RestartButton(stage);
