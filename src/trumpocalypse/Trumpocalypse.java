@@ -81,10 +81,13 @@ public class Trumpocalypse extends Application {
         iv1.setLayoutY(0);
         
         // System Description
-        DialogText t = new DialogText("Welcome to the Text Adventure Game! "
-                + "The story takes place at the start of a nuclear war between Russia and the US. "
-                + "The player must make it to his bunker in time."
-                + "The player's success depends on his/her choices. Choose wisely!");
+        DialogText t = new DialogText("Welcome to Trumpocalypse!\n" 
+                + "The story takes place after the election of the US where Donald Trump " 
+                + "has just been elected president. In response to this event, the world is " 
+                + "on the brink of nuclear war. You must make it to the bunker before the world "
+                + "is engulfed in radiation.  Your success depends on "
+                + "your choices. Choose wisely!");
+        t.setLayoutY(120);
         
         // Exit Button
         ExitButton btnExit = new ExitButton();
