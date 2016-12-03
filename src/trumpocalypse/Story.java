@@ -33,7 +33,10 @@ class Story {
 
     // C4 Bench Person
     private Character c4BenchPerson;
-
+    
+    // C4 Fight Person
+    private Character c4FightPerson;
+    
     /**
      *
      * @param gc - reference to the GameController so that we can update GUI
@@ -68,6 +71,9 @@ class Story {
         // C4 Bench Person
         c4BenchPerson = new Character("c4BenchPerson", false);
         c4BenchPerson.addCurrency(25.00);
+        
+        // C4 Fight Person
+        c4FightPerson = new Character("c4FightPerson", false);
     }
 
     public void displayInventory() {
@@ -265,7 +271,14 @@ class Story {
 
                         // Add Currency
                         mc.addCurrency(50.00);
-
+                        
+                        // Reduce Health
+                        mc.reduceHealth(25.00);
+                        
+                        if (mc.getHealth() <= 0.00) {
+                            gc.getJFX().setEndScene(prepend + " You ran out of health and died.");
+                        }
+                        
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
@@ -644,7 +657,11 @@ class Story {
 
                     // Reduce Health
                     mc.reduceHealth(10.0);
-
+                    
+                    if (mc.getHealth() <= 0.00) {
+                        gc.getJFX().setEndScene(prepend + " You ran out of health and died.");
+                    }
+                    
                     progress++;
                     subprogress = 0;
                     updateStory(prepend, location);
@@ -860,7 +877,8 @@ class Story {
 
                     // Reduce health 
                     mc.reduceHealth(15.00);
-
+                    c4FightPerson.reduceHealth(15.00);
+                    
                     if (mc.getHealth() <= 0.00) {
                         gc.getJFX().setEndScene("You lunge to attack with the knife, you cut him across the face. He is able to get the knife from your grip and stab you in the leg. Health has been reduced 25%. Your health has reached zero. Game over.");
                     } else {
@@ -879,7 +897,9 @@ class Story {
                     if (location.contains("gun")) {
 
                         String prepend = "You are able to pull out your pistol to shoot. He lunges for the gun but it is too late.";
-
+                        
+                        c4FightPerson.reduceHealth(100.00);
+                        
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
@@ -920,7 +940,9 @@ class Story {
                 if (subsubprogress == 0) {
 
                     gc.getJFX().updateDialog("You are able to get the pistol out and shoot him in the arm. He closes the distance and is able to kick the pistol out of reach.");
-
+                    
+                    c4FightPerson.reduceHealth(50.00);
+                    
                     String choice1 = "Go for Choke Hold";
                     String choice2 = "Attack with knife";
                     String choice3 = "Knee in the groin";
@@ -933,7 +955,9 @@ class Story {
 
                     if (location.contains("choke")) {
                         String prepend = "You are able to get the guy in a choke hold, and he slowly falls asleep.\n";
-
+                        
+                        c4FightPerson.reduceHealth(100.00);
+                        
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
@@ -946,8 +970,10 @@ class Story {
                         subprogress = 0;
                         subsubprogress = 0;
                     } else if (location.contains("knee")) {
-                        String prepend = "You knee the man in the groin and he falls over in pain. You able to knock him out.\n";
-
+                        String prepend = "You knee the man in the groin and he falls over in pain. You are able to knock him out.\n";
+                        
+                        c4FightPerson.reduceHealth(100.00);
+                        
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
@@ -978,6 +1004,8 @@ class Story {
                     if (location.contains("fake")) {
                         String prepend = "You fake injury and are able to mislead the guy. He closes in and you elbow him in the abdomen. He falls over writhing in pain and you are able to escape.\n";
 
+                        c4FightPerson.reduceHealth(100.00);
+                        
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
@@ -986,6 +1014,8 @@ class Story {
                     } else if (location.contains("lock")) {
                         String prepend = "You are able to get him in a headlock and he slowly falls asleep.";
 
+                        c4FightPerson.reduceHealth(100.00);
+                        
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
@@ -1018,7 +1048,29 @@ class Story {
 
             gc.getJFX().updateDialog("'Hey, you interested in buying any of these items?'");
 
-            String choice1 = "Sell medkit for $10";
+            String choice1 = "";
+            String c1ID = "";
+            
+            boolean find1 = false;
+            Item r1 = null;
+
+            for (Item i : mc.getInventory().getInventory()) {
+                if (i.getName().equals("Medkit")) {
+                    find1 = true;
+                    r1 = i;
+                    break;
+                }
+            }
+            
+            if (find1 == true) {
+                choice1 = "Sell medkit for $10";
+                c1ID = "c4BenchPeople medkit";
+            }
+            else {
+                choice1 = "Tell them you changed your mind.";
+                c1ID = "c4BenchPeople change";
+            }
+            
             String choice2 = "Sell knife for $15";
 
             String choice3 = "";
@@ -1047,7 +1099,7 @@ class Story {
 
             String choice4 = "Check Inventory";
 
-            gc.getJFX().updateChoices("c4BenchPeople medkit", choice1, "c4BenchPeople knife", choice2, c3ID, choice3, "c4BenchPeople check", choice4);
+            gc.getJFX().updateChoices(c1ID, choice1, "c4BenchPeople knife", choice2, c3ID, choice3, "c4BenchPeople check", choice4);
 
             subprogress++;
         } else {
@@ -1081,7 +1133,15 @@ class Story {
 
                 }
 
-            } else if (location.contains("knife")) {
+            } 
+            else if (location.contains("change")) {
+                progress++;
+                subprogress = 0;
+                subsubprogress = 0;
+                
+                updateStory("", location);
+            }
+            else if (location.contains("knife")) {
 
                 if (c4BenchPerson.getCurrency() >= 15.00) {
 
