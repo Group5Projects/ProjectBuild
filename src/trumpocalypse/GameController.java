@@ -2,37 +2,46 @@ package trumpocalypse;
 
 /**
  * 
- * @author Julian Loftis
+ * @author Julian Loftis, Michael Murphy, Robert Gulker
  */
 
 public class GameController {
     
+    // Story and Reference to Trumpocalypse GUI
     private Story story;
     private Trumpocalypse jfx;
     
+    /**
+     * 
+     * @param jfx - reference to the GUI so that we can update GUI choices and dialog
+     */
     public GameController(Trumpocalypse jfx) {
-        //mc.getCharacterInfo();
-        
+  
         this.jfx = jfx;
-        story = new Story(this, jfx);
-        
-//        Item i1 = new Item("Pistol", "Shoots", 1);
-//        Item i2 = new Item("Medkit", "Heals", 5);
-//        Item i3 = new Item("Medkit", "Heals", 1);
-//        
-//        mc.getInventory().addItems(pistol, medkit, medkit2);
-//        mc.getInventory().displayInventory();
+        story = new Story(this);
+
     }
     
+    /**
+     * 
+     * @param d - update the GUI dialog
+     */
     public void updateDialog(String d) {
         jfx.updateDialog(d);
     }
 
-    
+    /**
+     * 
+     * @return - the story reference
+     */
     public Story getStory() {
         return this.story;
     }
     
+    /**
+     * 
+     * @return - the GUI reference
+     */
     public Trumpocalypse getJFX() {
         return this.jfx;
     }
