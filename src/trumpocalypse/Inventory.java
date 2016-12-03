@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Julian Loftis
+ * @author Julian Loftis, Michael Murphy, Robert Gulker
  */
 
 public class Inventory {
+    
+    // ArrayList of Items and Size of Inventory
     private ArrayList<Item> inv;
     private int size;
     
@@ -15,10 +17,19 @@ public class Inventory {
         inv = new ArrayList<Item>();
     }
     
+    /**
+     * 
+     * @param i - item to be added
+     */
     public void addItem(Item i) {
         inv.add(i);
         size++;
     }
+    
+    /**
+     * 
+     * @param is - items to be added
+     */
     public void addItems(Item... is) {
         for (Item i: is) {
             if (inv.contains(i.getName())) {
@@ -31,18 +42,35 @@ public class Inventory {
             }
         }
     }
+    
+    /**
+     * 
+     * @return - the size of the inventory
+     */
     public int getSize() {
         return this.size;
     }
     
+    /**
+     * 
+     * @param i - item to be removed
+     * @return - the item that was removed
+     */
     public Item removeItem(Item i) {
         Item n = i;
         inv.remove(i);
         return n;
     }
+    
+    /**
+     * 
+     * @return - the inventory
+     */
     public ArrayList<Item> getInventory() {
         return this.inv;
     } 
+    
+    // Displays the user inventory, used for testing
     public void displayInventory() {
         for (Item i: this.inv) {
             System.out.println("Name: " + i.getName());
