@@ -7,7 +7,7 @@ import javafx.scene.text.TextAlignment;
 
 /**
  *
- * @author Julian Loftis
+ * @author Julian Loftis, Michael Murphy, Robert Gulker
  * 
  */
 
