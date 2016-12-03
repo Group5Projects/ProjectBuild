@@ -8,10 +8,17 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Julian Loftis
+ * @author Julian Loftis, Michael Murphy, Robert Gulker
  */
 
 public class ChoiceButton extends Button {
+    /**
+     * 
+     * @param gc - reference to the GameController
+     * @param cID - the location to update the story with
+     * @param choice - (1-4) which ChoiceButton selected
+     * @param text - text for the ChoiceButton
+     */
     public ChoiceButton(GameController gc, String cID, int choice, String text) {
         // Used for choices in game (choice = (1-4))
         // If choices are 5 or 6, they are used to restart and exit game
