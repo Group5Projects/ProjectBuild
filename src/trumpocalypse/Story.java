@@ -8,20 +8,21 @@ import javafx.stage.StageStyle;
 
 /**
  * 
- * @author Julian Loftis
+ * @author Julian Loftis, Michael Murphy, Robert Gulker
  */
 
 class Story {
     
+    // Used to locate position in the storyline
     int progress;
     int subprogress;
     int subsubprogress;
     
     GameController gc;
-    Trumpocalypse jfx;
     String location;
     
-    private Character mc = new Character("Julian", true);
+    // The main character and user of the game
+    private Character mc = new Character("User", true);
     
     // C1 Mugger
     private Character c1Mugger;
@@ -33,14 +34,26 @@ class Story {
     
     // C4 Bench Person
     private Character c4BenchPerson;
-  
-    public Story(GameController gc, Trumpocalypse jfx) {
+    
+    /**
+     * 
+     * @param gc - reference to the GameController so that we can update GUI choices and dialog
+     */
+    public Story(GameController gc) {
+        
+        // Keeps track of the progress of the story, progress = main story, subprogress = choice within progress, subsubprogress = choice underneath subprogress
         this.progress = 0;
         this.subprogress = 0;
         this.subsubprogress = 0;
+        
+        // Reference to the GameController in order to update the GUI dialog and choices
         this.gc = gc;
-        this.jfx = jfx;
-        this.location = "start";
+        
+        // Setup Main Character
+        Item knife = new Item("Knife", "Weapon", 1);
+        Item ducttape = new Item("Duct Tape", "Utility", 1);
+        mc.getInventory().addItem(knife);
+        mc.addCurrency(50.00);
         
         // C1 Mugger
         c1Mugger = new Character("c1Mugger", false);
@@ -58,12 +71,15 @@ class Story {
     }
     
     public void displayInventory() {
+        
+        // Creates a new dialog to show the player's inventory
         Stage dialog = new Stage();
         dialog.setTitle("Inventory");
         dialog.initStyle(StageStyle.UTILITY);
         
         ListView listView = new ListView();
         
+        // Adds all of the items in the inventory to the the ListView
         for (Item i:mc.getInventory().getInventory()) {
             listView.getItems().add(i.getName());
         }
@@ -77,6 +93,11 @@ class Story {
         dialog.setHeight(250);
         dialog.show();
     }
+    
+    /* The following methods with the structure c<num><keyword> like "c1Sneak" represent sub choices in the overall story structure
+    * For example, if user clicks "Try to resolve situation peacefully" it calls c1Resolve and then the next choice could be
+    * c1Resolve disarm. Once user is done with this sub story, the continue along the storyline of the game.
+    */
     
     /* Chapter 1 */
     
@@ -590,7 +611,7 @@ class Story {
                                 updateStory(prepend, location);
                             }
                             else if (location.contains("snot")) {
-                                String prepend = "The sinus infection you have, has paid off. You spew forth a small meteric crap ton of green sludge from your sinus canals; smothering the mans face yellowish green mucus. The man gags and lets go of you, you can hear him vomiting as you flee.\n";
+                                String prepend = "The sinus infection you have has paid off. You spew forth a small meteric crap ton of green sludge from your sinus canals; smothering the mans face in yellowish green mucus. The man gags and lets go of you, you can hear him vomiting as you flee.\n";
                                 
                                 progress++;
                                 subprogress = 0;
@@ -602,28 +623,62 @@ class Story {
                         
                     }
                     else if (location.contains("fire")) {
-                        String prepend = "You see a fire and run away. \n";
-                        progress++;
+                        
+                        String prepend = "You are now in a maze of twisty passages, all alike. ";
+                        progress ++;
                         subprogress = 0;
                         
                         updateStory(prepend, location);
+
                     }
                     else if (location.contains("duck")) {
-                        String prepend = "You grabbed the man. He pulls out a knife and stabs you. Health has been reduced 25%. You run away from the scene.\n";
+                        
+                        String prepend = "Yes, a profound statement, random, and irrelevant.... You win nothing.";
                         progress++;
                         subprogress = 0;
                         
                         updateStory(prepend, location);
+                        
                     }
                 }
             }
             else if (location.contains("along")) {
                 
+                if (subprogress == 1) {
+                    
+                    gc.getJFX().setEndScene("Thats not gonna happen, but.. I can help you along with a nap."+" You feel the sharp sting of needle pierce your skin, and all goes quiet.");
+                    
+                    progress = 0;
+                    subprogress = 0;
+                    
+                }
+                
             }
             else if (location.contains("baby")) {
                 
+                if (subprogress == 1) {
+                    
+                    String prepend ="Dropped, eh? I'm gonna drop you! A ringing fills you ears, as the concrete below rushes towards your face, you hit the ground with a thud. Health has been reduced 10%";
+                    
+                    // Reduce Health
+                    mc.reduceHealth(10.0);
+                    
+                    progress++;
+                    subprogress = 0;
+                    updateStory(prepend,location);
+                    
+                }
+                
             }
             else if (location.contains("trump")) {
+                
+                if (subprogress == 1) {
+                    
+                    gc.getJFX().setEndScene("I voted clinton! You both begin to argue your politcal views, the debate rages on for all eternity... costing you this game... and you life.");
+                    
+                    progress = 0;
+                    subprogress = 0;
+                }
                 
             }
         }
@@ -846,7 +901,7 @@ class Story {
                     String choice3 = "Knee in the groin";
                     String choice4 = "Check Inventory";
                     
-                    gc.getJFX().updateChoices("c4Approach pistol choke", choice1, "c4Approach pistol knife", choice2, "c4Approach pistol knee", choice3, "c4Approach pistol check", choice4);
+                    gc.getJFX().updateChoices("c4Approach pistol choke", choice1, "c4Approach pistol blade", choice2, "c4Approach pistol knee", choice3, "c4Approach pistol check", choice4);
                     
                     subsubprogress++;
                 }
@@ -861,13 +916,12 @@ class Story {
                         
                         updateStory(prepend, location);
                     }
-                    else if (location.contains("knife")) {
+                    else if (location.contains("blade")) {
                         gc.getJFX().setEndScene("You lunge with the knife and he blocks the blow and instead turns the knife on you. Your journey has ended.\n");
                         
                         progress++;
                         subprogress = 0;
                         subsubprogress = 0;
-                        
                     }
                     else if (location.contains("knee")) {
                         String prepend = "You knee the man in the groin and he falls over in pain. You able to knock him out.\n";
@@ -971,8 +1025,10 @@ class Story {
                     
                     // Remove medkit from your inventory
                     
+                    
                     // Add medkit to their inventory
-
+                    
+                    
                     progress++;
                     subprogress = 0;
                     subsubprogress = 0;
@@ -1052,12 +1108,14 @@ class Story {
     
     /* End Chapter 4 */
     
+    /**
+     * 
+     * @param prepend - text that needs to be added before the dialog text
+     * @param location - location/position in the story line (Ex. "c1Resolve disarm")
+     */
     public void updateStory(String prepend, String location) {
         
-        System.out.println("h Progress: " + progress);
-        System.out.println("h Subprogress: " + subprogress);
-        System.out.println("h Subsubprogress: " + subsubprogress);
-        System.out.println("h Location: " + location);
+        // This method basically moves the storyline along and receives story location from the ChoiceButton
         
         if (progress == 0) {
             
