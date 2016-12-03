@@ -20,18 +20,31 @@ import javafx.stage.StageStyle;
 
 /**
  * 
- * @author Julian Loftis
+ * @author Julian Loftis, Michael Murphy, Robert Gulker
  */
 
 public class Trumpocalypse extends Application {
     
+    // Main stage everything is displayed in
     private Stage stage;
+    
+    // Used for dragging and dropping screen anywhere
     private double xOffset = 0;
     private double yOffset = 0;
+    
+    // Text box used to display situations/dialog in the storyline
     private DialogText dialog;
+    
+    // Pane that holds four ChoiceButtons
     private Pane choicePane;
+    
+    // GameController that creates Story, Characters, etc.
     private GameController gc;
     
+    /**
+     * 
+     * @param primaryStage - the initial stage that contains everything
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -39,7 +52,7 @@ public class Trumpocalypse extends Application {
         
         stage = primaryStage;
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("Hello World!");
+        stage.setTitle("Trumpocalypse");
         stage.setScene(scene1);
         stage.setWidth(500);
         stage.setHeight(400);
@@ -47,9 +60,15 @@ public class Trumpocalypse extends Application {
         stage.show();
         
     }
+    
+    /**
+     * 
+     * @return - the startScene of the game
+     */
     public Scene startScene(){
-        
         Pane root = new Pane();
+        
+        // Start Game Button
         Button startGame = new Button();
         startGame.setText("Start Game");
         startGame.setStyle("-fx-font: 18 arial; -fx-background-color: seagreen; -fx-text-fill: white; -fx-padding: 10 40 10 40;");
@@ -115,8 +134,13 @@ public class Trumpocalypse extends Application {
         return new Scene(root);
     }
     
-    // Called if the user wins the game, dialog is used to display custom win message
+    /**
+     * 
+     * @param dialog - text to be displayed on the endGameScene
+     * @return - the endGameScene
+     */
     public Scene endGameScene(String dialog) {
+        // Called if the user wins the game, dialog is used to display custom win message
         Pane root = new Pane();
         root.getStylesheets().add("ingame.css");
         
@@ -161,6 +185,10 @@ public class Trumpocalypse extends Application {
         return new Scene(root);
     }
     
+    /**
+     * 
+     * @return - the inGameScene Scene which is displayed during the storyline
+     */
     public Scene inGameScene(){
         Pane root = new Pane();
         root.getStylesheets().add("ingame.css");
@@ -178,18 +206,22 @@ public class Trumpocalypse extends Application {
         hb.setAlignment(Pos.CENTER_LEFT);
         hb.setLayoutX(50);
         
+        // Pane that holds all ChoiceButtons
         choicePane = new Pane();
         choicePane.setPrefSize(500, 180);
         choicePane.setLayoutX(0);
         choicePane.setLayoutY(220);
         
+        // Four ChoiceButtons seen throughout storyline
         ChoiceButton btn1 = new ChoiceButton(gc, "c1Sneak", 1, "Silently sneak up and knife the guy");
         ChoiceButton btn2 = new ChoiceButton(gc, "c1Resolve", 2, "Try to resolve situation peacefully");
         ChoiceButton btn3 = new ChoiceButton(gc, "c1Stop", 3, "Yell at the man to stop");
         ChoiceButton btn4 = new ChoiceButton(gc, "c1Check", 4, "Check Inventory");
         
+        // Adds the buttons to the ChoicePane
         choicePane.getChildren().addAll(btn1,btn2,btn3,btn4);
         
+        // Restart and Exit Buttons
         RestartButton restartBtn = new RestartButton(stage);
         ExitButton exitBtn = new ExitButton();
         
@@ -220,25 +252,56 @@ public class Trumpocalypse extends Application {
         launch(args);
     }
     
+    
+    /**
+     * 
+     * @param text - text to be displayed in the DialogText
+     */
     public void updateDialog(String text) {
-        // Updates the dialog story text 
         dialog.setText(text);
     }
+    
+    /**
+     * 
+     * @param c1ID - location for ChoiceButton 1
+     * @param c1 - String text to be displayed for ChoiceButton 1
+     * @param c2ID - location for ChoiceButton 2
+     * @param c2 - String text to be displayed for ChoiceButton 2
+     * @param c3ID - location for ChoiceButton 3
+     * @param c3 - String text to be displayed for ChoiceButton 3
+     * @param c4ID - location for ChoiceButton 4
+     * @param c4 - String text to be displayed for ChoiceButton 4
+     */
     public void updateChoices(String c1ID, String c1, String c2ID, String c2, String c3ID, String c3, String c4ID, String c4) {
-        // Updates the ChoiceButtons with a new set of strings
+        // Updates the ChoiceButtons with a new set of strings and location
         ChoiceButton choice1 = new ChoiceButton(gc, c1ID, 1, c1);
         ChoiceButton choice2 = new ChoiceButton(gc, c2ID, 2, c2);
         ChoiceButton choice3 = new ChoiceButton(gc, c3ID, 3, c3);
         ChoiceButton choice4 = new ChoiceButton(gc, c4ID, 4, c4);
         choicePane.getChildren().addAll(choice1, choice2, choice3, choice4);
     }
+    
+    /**
+     * 
+     * @param dialog - text to be displayed on the end scene
+     */
     public void setEndScene(String dialog) {
         // Called from story to show that the user has reached the end game (either failed or won)
         stage.setScene(endGameScene(dialog));
     }
+    
+    /**
+     * 
+     * @return - the ChoicePane containing ChoiceButtons
+     */
     public Pane getChoicePane() {
         return this.choicePane;
     }
+    
+    /**
+     * 
+     * @return - the primary stage that holds all of the scenes
+     */
     public Stage getStage() {
         return this.stage;
     }
