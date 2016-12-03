@@ -20,7 +20,6 @@ public class RestartButton extends Button {
         // Restart the system
         this.setOnAction( __ ->
         {
-          System.out.println( "Restarting app!" );
           st.close();
           Platform.runLater( () -> new Trumpocalypse().start( new Stage() ) );
         } );
